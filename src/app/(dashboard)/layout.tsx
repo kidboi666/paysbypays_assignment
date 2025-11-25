@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { AppSidebar } from "@/app/(dashboard)/_components/app-sidebar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashBoardLayout({
   children,
@@ -13,7 +13,7 @@ export default function DashBoardLayout({
   return (
     <SidebarProvider>
       <AppSidebar pathname={pathname} />
-      <SidebarInset>{children}</SidebarInset>
+      {children}
     </SidebarProvider>
   );
 }
