@@ -5,5 +5,5 @@ import { axios } from "@/shared/lib/axios/axios";
 
 export async function getPayments(): Promise<Payment[]> {
   const response = await axios.get("/payments/list");
-  return response.data;
+  return response.data.data;
 }
