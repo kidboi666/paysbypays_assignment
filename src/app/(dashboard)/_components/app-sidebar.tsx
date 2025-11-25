@@ -12,7 +12,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
+} from "@/shared/components/ui/sidebar";
 
 const NAV_MENU_ITEMS = {
   navMain: [
