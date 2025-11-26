@@ -10,7 +10,7 @@ import {
 
 const SKELETON_ROW_COUNT = 6;
 
-export default function PaymentsLoading() {
+export default function MerchantsLoading() {
   return (
     <div className="w-full space-y-4 p-4">
       <div className="flex items-center justify-between">
@@ -26,16 +26,16 @@ export default function PaymentsLoading() {
                 <Skeleton className="size-4 rounded-sm" />
               </TableHead>
               <TableHead>
-                <Skeleton className="h-4 w-[60px]" />
+                <Skeleton className="h-4 w-[100px]" />
+              </TableHead>
+              <TableHead>
+                <Skeleton className="h-4 w-[200px]" />
               </TableHead>
               <TableHead>
                 <Skeleton className="h-4 w-[80px]" />
               </TableHead>
               <TableHead>
-                <Skeleton className="h-4 w-[100px]" />
-              </TableHead>
-              <TableHead>
-                <Skeleton className="h-4 w-[70px]" />
+                <Skeleton className="h-4 w-[120px]" />
               </TableHead>
               <TableHead className="text-right">
                 <Skeleton className="ml-auto h-4 w-[50px]" />
@@ -50,16 +50,16 @@ export default function PaymentsLoading() {
                   <Skeleton className="size-4 rounded-sm" />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className="h-4 w-[120px]" />
+                  <Skeleton className="h-4 w-[100px]" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-4 w-[200px]" />
                 </TableCell>
                 <TableCell>
                   <Skeleton className="h-4 w-[80px]" />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className="h-4 w-[140px]" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className="h-4 w-[60px]" />
+                  <Skeleton className="h-4 w-[120px]" />
                 </TableCell>
                 <TableCell className="text-right">
                   <Skeleton className="ml-auto size-8 rounded-md" />
