@@ -41,4 +41,4 @@ export const PAYMENT_TYPE_CONFIG: Record<PaymentType, { label: string }> = {
   BILLING: {
     label: "정기 결제",
   },
-} as const;
+};
