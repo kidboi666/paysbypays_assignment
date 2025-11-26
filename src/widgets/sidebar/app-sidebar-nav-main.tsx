@@ -25,9 +25,7 @@ export function AppSidebarNavMain({ items, pathname }: AppSidebarNavMainProps) {
           {items.map((item) => {
             const Icon = item.icon;
             let isActive = false;
-            if (pathname === "/" && item.url === "/") {
-              isActive = true;
-            } else if (pathname === item.url) {
+            if (pathname === item.url) {
               isActive = true;
             }
             return (
