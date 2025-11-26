@@ -7,7 +7,6 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { paymentColumns } from "@/entities/payment/ui/payment-columns";
 import { Button } from "@/shared/components/ui/button";
 import {
   Table,
@@ -43,7 +42,10 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      style={{ width: header.getSize() }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -76,7 +78,7 @@ export function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={paymentColumns.length}
+                  colSpan={columns.length}
                   className="h-24 text-center"
                 >
                   No results.
