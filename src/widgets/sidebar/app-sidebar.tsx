@@ -4,8 +4,6 @@ import {
   SettingsIcon,
   ShoppingBagIcon,
 } from "lucide-react";
-import { NavMain } from "@/app/(dashboard)/_components/nav-main";
-import { NavSub } from "@/app/(dashboard)/_components/nav-sub";
 import {
   Sidebar,
   SidebarContent,
@@ -13,6 +11,8 @@ import {
   SidebarHeader,
   SidebarTrigger,
 } from "@/shared/components/ui/sidebar";
+import { AppSidebarNavMain } from "@/widgets/sidebar/app-sidebar-nav-main";
+import { AppSidebarNavSub } from "@/widgets/sidebar/app-sidebar-nav-sub";
 
 const NAV_MENU_ITEMS = {
   navMain: [
@@ -34,10 +34,10 @@ export function AppSidebar({ pathname }: AppSidebarProps) {
         <SidebarTrigger size="lg" />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={NAV_MENU_ITEMS.navMain} pathname={pathname} />
+        <AppSidebarNavMain items={NAV_MENU_ITEMS.navMain} pathname={pathname} />
       </SidebarContent>
       <SidebarFooter>
-        <NavSub items={NAV_MENU_ITEMS.navSub} pathname={pathname} />
+        <AppSidebarNavSub items={NAV_MENU_ITEMS.navSub} pathname={pathname} />
       </SidebarFooter>
     </Sidebar>
   );
