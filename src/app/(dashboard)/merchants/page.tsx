@@ -1,16 +1,16 @@
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { merchantQueries } from "@/entities/merchant/api/queries";
-import { getQueryClient } from "@/shared/lib/query-client/get-query-client";
-import { MerchantsPageView } from "@/views/merchants/merchants-page-view";
+"use client";
 
-export default async function MerchantsPage() {
-  const queryClient = getQueryClient();
+import { useMerchants } from "@/entities/merchant/api/use-merchants";
+import { merchantTableColumn } from "@/entities/merchant/ui/merchant-table-columns";
+import { DataTable } from "@/widgets/table/data-table";
 
-  await queryClient.prefetchQuery(merchantQueries.getMerchants());
+export default function MerchantsPage() {
+  const { data } = useMerchants();
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <MerchantsPageView />
-    </HydrationBoundary>
+    <main className="p-4 space-y-4 flex flex-1 flex-col">
+      <h1>Merchants Page</h1>
+      <DataTable columns={merchantTableColumn} data={data} />
+    </main>
   );
 }
