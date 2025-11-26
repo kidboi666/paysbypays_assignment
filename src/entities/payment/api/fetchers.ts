@@ -1,5 +1,3 @@
-"use server";
-
 import type { Payment } from "@/entities/payment/model/types";
 import { axios } from "@/shared/lib/axios/axios";
 import type { BaseResponse } from "@/shared/types/api";

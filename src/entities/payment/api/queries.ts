@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getPayments } from "@/entities/payment/api/server";
+import { getPayments } from "@/entities/payment/api/fetchers";
 
 export const paymentQueries = {
   getPayments: () =>
