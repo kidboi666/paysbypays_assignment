@@ -1,7 +1,7 @@
 "use client";
 
 import { usePayments } from "@/entities/payment/api/use-payments";
-import { paymentColumns } from "@/entities/payment/ui/payment-columns";
+import { paymentTableColumns } from "@/entities/payment/ui/payment-table-columns";
 import { DataTable } from "@/widgets/table/data-table";
 
 export function PaymentsPageView() {
@@ -9,7 +9,7 @@ export function PaymentsPageView() {
 
   return (
     <main className="p-4 space-y-4 flex flex-1">
-      <DataTable columns={paymentColumns} data={data} />
+      <DataTable columns={paymentTableColumns} data={data} />
     </main>
   );
 }
