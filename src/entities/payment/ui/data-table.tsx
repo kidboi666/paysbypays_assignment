@@ -13,8 +13,8 @@ import {
   type VisibilityState,
 } from "@tanstack/react-table";
 import * as React from "react";
+import { usePayments } from "@/entities/payment/api/use-payments";
 import type { Payment } from "@/entities/payment/model/types";
-import { usePayments } from "@/entities/payment/model/use-payments";
 import { Button } from "@/shared/components/ui/button";
 import { Checkbox } from "@/shared/components/ui/checkbox";
 import {
