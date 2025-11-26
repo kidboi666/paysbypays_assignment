@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getMerchants } from "@/entities/merchant/api/server";
+import { getMerchants } from "@/entities/merchant/api/fetchers";
 
 export const merchantQueries = {
   getMerchants: () =>

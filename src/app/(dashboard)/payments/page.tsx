@@ -1,16 +1,15 @@
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { paymentQueries } from "@/entities/payment/api/queries";
-import { getQueryClient } from "@/shared/lib/query-client/get-query-client";
-import { PaymentsPageView } from "@/views/payments/payments-page-view";
+"use client";
 
-export default async function PaymentsPage() {
-  const queryClient = getQueryClient();
+import { usePayments } from "@/entities/payment/api/use-payments";
+import { paymentTableColumns } from "@/entities/payment/ui/payment-table-columns";
+import { DataTable } from "@/widgets/table/data-table";
 
-  await queryClient.prefetchQuery(paymentQueries.getPayments());
+export default function PaymentsPage() {
+  const { data } = usePayments();
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <PaymentsPageView />
-    </HydrationBoundary>
+    <main className="p-4 space-y-4 flex flex-1">
+      <DataTable columns={paymentTableColumns} data={data} />
+    </main>
   );
 }

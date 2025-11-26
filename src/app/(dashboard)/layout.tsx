@@ -1,10 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import {
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/shared/components/ui/sidebar";
+import { SidebarProvider } from "@/shared/components/ui/sidebar";
 import { AppSidebar } from "@/widgets/sidebar/app-sidebar";
 
 export default function DashBoardLayout({
