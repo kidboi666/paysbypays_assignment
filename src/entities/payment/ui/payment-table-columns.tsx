@@ -16,7 +16,7 @@ const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
   timeZone: "UTC",
 });
 
-export const paymentColumns: ColumnDef<Payment>[] = [
+export const paymentTableColumns: ColumnDef<Payment>[] = [
   {
     accessorKey: "paymentAt",
     header: "결제 일시",
