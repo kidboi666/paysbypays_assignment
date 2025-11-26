@@ -6,5 +6,6 @@ export const paymentQueries = {
     queryOptions({
       queryKey: ["payments"],
       queryFn: getPayments,
+      select: (data) => data.data,
     }),
 };
