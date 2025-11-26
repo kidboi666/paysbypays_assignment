@@ -6,7 +6,7 @@ import {
   SidebarMenuItem,
 } from "@/shared/components/ui/sidebar";
 
-interface NavSubProps {
+interface AppSidebarNavSubProps {
   items: {
     label: string;
     icon: LucideIcon;
@@ -15,7 +15,7 @@ interface NavSubProps {
   pathname: string;
 }
 
-export function NavSub({ items, pathname }: NavSubProps) {
+export function AppSidebarNavSub({ items, pathname }: AppSidebarNavSubProps) {
   return (
     <SidebarMenu>
       {items.map((item) => {

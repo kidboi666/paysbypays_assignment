@@ -8,7 +8,7 @@ import {
   SidebarMenuItem,
 } from "@/shared/components/ui/sidebar";
 
-interface NavMainProps {
+interface AppSidebarNavMainProps {
   items: {
     label: string;
     icon: LucideIcon;
@@ -17,7 +17,7 @@ interface NavMainProps {
   pathname: string;
 }
 
-export function NavMain({ items, pathname }: NavMainProps) {
+export function AppSidebarNavMain({ items, pathname }: AppSidebarNavMainProps) {
   return (
     <SidebarGroup>
       <SidebarGroupContent>
@@ -25,9 +25,7 @@ export function NavMain({ items, pathname }: NavMainProps) {
           {items.map((item) => {
             const Icon = item.icon;
             let isActive = false;
-            if (pathname === "/" && item.url === "/") {
-              isActive = true;
-            } else if (pathname === item.url) {
+            if (pathname === item.url) {
               isActive = true;
             }
             return (
