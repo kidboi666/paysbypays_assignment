@@ -45,7 +45,7 @@ function PaginationButton({
   className,
   isActive,
   size = "icon-sm",
-  variant = "outline",
+  variant = "ghost",
   ...props
 }: PaginationButtonProps) {
   return (
