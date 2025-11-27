@@ -1,7 +1,10 @@
 "use client";
 
 import { useMerchantsDetails } from "@/entities/merchant/api/use-merchants-details";
-import { MERCHANT_DETAIL_COLUMN_MAP } from "@/entities/merchant/model/constants";
+import {
+  MERCHANT_DETAIL_COLUMN_MAP,
+  MERCHANT_STATUS_MAP,
+} from "@/entities/merchant/model/constants";
 import { merchantDetailTableColumns } from "@/entities/merchant/ui/merchant-detail-table-columns";
 import { PageBreadcrumb } from "@/widgets/breadcrumb/page-breadcrumb";
 import { DataTable } from "@/widgets/table/data-table";
@@ -18,7 +21,8 @@ export default function MerchantsPage() {
         tableName="merchants"
         columns={merchantDetailTableColumns}
         data={data}
-        labels={MERCHANT_DETAIL_COLUMN_MAP}
+        columnLabels={MERCHANT_DETAIL_COLUMN_MAP}
+        filterLabels={MERCHANT_STATUS_MAP}
       />
     </main>
   );

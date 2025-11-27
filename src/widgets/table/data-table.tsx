@@ -4,33 +4,40 @@ import {
   type ColumnDef,
   type ColumnFiltersState,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
   type VisibilityState,
 } from "@tanstack/react-table";
+import type { LucideIcon } from "lucide-react";
 import React from "react";
 import { useIsMounted, useLocalStorage } from "usehooks-ts";
 import { LOCAL_STORAGE_KEY } from "@/shared/model/constants";
 import { DataTableContent } from "@/widgets/table/data-table-content";
 import { DataTablePagination } from "@/widgets/table/data-table-pagination";
+import { DataTableStatusFilter } from "@/widgets/table/data-table-status-filter";
 import { DataTableViewOptions } from "@/widgets/table/data-table-view-options";
 
 const PAGE_SIZE = 16;
 
-interface DataTableProps<TData> {
+interface DataTableProps<TData, TFilter extends string> {
   tableName: string;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   columns: ColumnDef<TData, any>[];
   data: TData[];
-  labels: Record<string, string>;
+  columnLabels: Record<string, string>;
+  filterLabels: Record<
+    TFilter,
+    { label: string; className: string; icon: LucideIcon }
+  >;
 }
 
-export function DataTable<TData>({
+export function DataTable<TData, TFilter extends string>({
   tableName,
   columns,
   data,
-  labels,
-}: DataTableProps<TData>) {
+  columnLabels,
+  filterLabels,
+}: DataTableProps<TData, TFilter>) {
   const isMounted = useIsMounted();
   const [columnVisibility, setColumnVisibility] =
     useLocalStorage<VisibilityState>(
@@ -63,6 +70,7 @@ export function DataTable<TData>({
     onColumnVisibilityChange: setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
   const [pageInput, setPageInput] = React.useState(
@@ -74,11 +82,21 @@ export function DataTable<TData>({
     setPageInput(`${table.getState().pagination.pageIndex + 1}`);
   }, [table.getState().pagination.pageIndex]);
 
+  const handleChangeFilterValue = (value?: string) => {
+    table.getColumn("status")?.setFilterValue(value);
+  };
+
   return (
     <div className="w-full flex flex-col gap-4">
       <header className="flex justify-between">
-        <div />
-        <DataTableViewOptions table={table} labels={labels} />
+        <DataTableStatusFilter
+          value={table.getColumn("status")?.getFilterValue() as string}
+          table={table}
+          labels={filterLabels}
+          onChange={handleChangeFilterValue}
+          filterKey="status"
+        />
+        <DataTableViewOptions table={table} labels={columnLabels} />
       </header>
       <div className="overflow-hidden rounded-md border">
         <DataTableContent columns={columns} data={data} table={table} />

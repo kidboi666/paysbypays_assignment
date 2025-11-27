@@ -1,7 +1,10 @@
 "use client";
 
 import { usePayments } from "@/entities/payment/api/use-payments";
-import { PAYMENT_COLUMN_MAP } from "@/entities/payment/model/constants";
+import {
+  PAYMENT_COLUMN_MAP,
+  PAYMENT_STATUS_MAP,
+} from "@/entities/payment/model/constants";
 import { paymentTableColumns } from "@/entities/payment/ui/payment-table-columns";
 import { PageBreadcrumb } from "@/widgets/breadcrumb/page-breadcrumb";
 import { DataTable } from "@/widgets/table/data-table";
@@ -21,7 +24,8 @@ export default function PaymentsPage() {
         tableName="payments"
         columns={paymentTableColumns}
         data={data}
-        labels={PAYMENT_COLUMN_MAP}
+        columnLabels={PAYMENT_COLUMN_MAP}
+        filterLabels={PAYMENT_STATUS_MAP}
       />
     </main>
   );
