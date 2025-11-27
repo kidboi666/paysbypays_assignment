@@ -48,6 +48,20 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
     },
   },
   {
+    accessorKey: "status",
+    header: PAYMENT_COLUMN_MAP.status,
+    cell: ({ row }) => {
+      const status = PAYMENT_STATUS_MAP[row.getValue<PaymentStatus>("status")];
+      const Icon = status.icon;
+      return (
+        <Badge variant="outline" className={status.className}>
+          <Icon />
+          {status.label}
+        </Badge>
+      );
+    },
+  },
+  {
     id: "amount",
     accessorFn: (row) => {
       const amount = parseFloat(row.amount);
@@ -65,21 +79,5 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
     cell: ({ row }) => (
       <div className="text-right font-medium">{row.getValue("amount")}</div>
     ),
-  },
-  {
-    accessorKey: "status",
-    header: () => <div className="text-right">{PAYMENT_COLUMN_MAP.status}</div>,
-    cell: ({ row }) => {
-      const status = PAYMENT_STATUS_MAP[row.getValue<PaymentStatus>("status")];
-      const Icon = status.icon;
-      return (
-        <div className="text-right">
-          <Badge variant="outline" className={status.className}>
-            <Icon />
-            {status.label}
-          </Badge>
-        </div>
-      );
-    },
   },
 ];
