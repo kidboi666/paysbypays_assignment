@@ -3,30 +3,16 @@
 import {
   type ColumnDef,
   type ColumnFiltersState,
-  flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
   type VisibilityState,
 } from "@tanstack/react-table";
 import React from "react";
-import { useLocalStorage } from "usehooks-ts";
-import { Input } from "@/shared/components/ui/input";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNextButton,
-  PaginationPreviousButton,
-} from "@/shared/components/ui/pagination";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/shared/components/ui/table";
+import { useIsMounted, useLocalStorage } from "usehooks-ts";
+import { LOCAL_STORAGE_KEY } from "@/shared/model/constants";
+import { DataTableContent } from "@/widgets/table/data-table-content";
+import { DataTablePagination } from "@/widgets/table/data-table-pagination";
 import { DataTableViewOptions } from "@/widgets/table/data-table-view-options";
 
 const PAGE_SIZE = 16;
@@ -44,23 +30,33 @@ export function DataTable<TData, TValue>({
   data,
   labels,
 }: DataTableProps<TData, TValue>) {
+  const isMounted = useIsMounted();
   const [columnVisibility, setColumnVisibility] =
-    useLocalStorage<VisibilityState>(`${tableName}-column-visibility`, {});
+    useLocalStorage<VisibilityState>(
+      LOCAL_STORAGE_KEY.columnVisibility(tableName),
+      {},
+    );
   const [columnFilters, setColumnFilters] = useLocalStorage<ColumnFiltersState>(
-    "column-filters",
+    LOCAL_STORAGE_KEY.columnFilters(tableName),
     [],
   );
-  const [pagination, setPagination] = useLocalStorage("pagination", {
-    pageIndex: 0,
-    pageSize: PAGE_SIZE,
-  });
+  const [pagination, setPagination] = useLocalStorage(
+    LOCAL_STORAGE_KEY.pagination,
+    {
+      pageIndex: 0,
+      pageSize: PAGE_SIZE,
+    },
+  );
+
   const table = useReactTable({
     data,
     columns,
     state: {
-      pagination,
-      columnVisibility,
-      columnFilters,
+      pagination: isMounted()
+        ? pagination
+        : { pageIndex: 0, pageSize: PAGE_SIZE },
+      columnVisibility: isMounted() ? columnVisibility : {},
+      columnFilters: isMounted() ? columnFilters : [],
     },
     onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
@@ -84,91 +80,13 @@ export function DataTable<TData, TValue>({
         <DataTableViewOptions table={table} labels={labels} />
       </header>
       <div className="overflow-hidden rounded-md border">
-        <Table>
-          <TableHeader className="bg-muted/50">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      style={{ width: header.getSize() }}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+        <DataTableContent columns={columns} data={data} table={table} />
       </div>
-      <Pagination>
-        <PaginationContent className="gap-2">
-          <PaginationItem>
-            <PaginationPreviousButton
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            />
-          </PaginationItem>
-          <PaginationItem className="flex gap-2 items-center">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                table.setPageIndex(parseInt(pageInput, 10) - 1);
-              }}
-            >
-              <Input
-                value={pageInput}
-                onChange={(e) => setPageInput(e.target.value)}
-                className="w-8 text-center h-7 px-1"
-              />
-            </form>
-            <span className="text-muted-foreground text-sm">
-              / {table.getPageCount()}
-            </span>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNextButton
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <DataTablePagination
+        table={table}
+        pageInput={pageInput}
+        setPageInput={setPageInput}
+      />
     </div>
   );
 }
