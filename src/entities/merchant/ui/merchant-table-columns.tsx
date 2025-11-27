@@ -1,4 +1,4 @@
-import type { ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import {
   MERCHANT_BIZ_TYPE_MAP,
   MERCHANT_COLUMN_MAP,
@@ -12,27 +12,21 @@ import type {
 import { Badge } from "@/shared/components/ui/badge";
 import { cn } from "@/shared/lib/utils";
 
-export const merchantTableColumn: ColumnDef<Merchant>[] = [
-  {
-    accessorKey: "mchtCode",
-    header: MERCHANT_COLUMN_MAP.mchtCode,
+const columnHelper = createColumnHelper<Merchant>();
+
+export const merchantTableColumn = [
+  columnHelper.accessor("mchtName", {
+    header: MERCHANT_COLUMN_MAP.mchtName,
     cell: (info) => info.getValue(),
-  },
-  {
-    accessorKey: "bizType",
+  }),
+  columnHelper.accessor("bizType", {
     header: MERCHANT_COLUMN_MAP.bizType,
     cell: ({ row }) => {
       const bizType = MERCHANT_BIZ_TYPE_MAP[row.getValue<BizType>("bizType")];
       return <Badge variant="outline">{bizType.label}</Badge>;
     },
-  },
-  {
-    accessorKey: "mchtName",
-    header: MERCHANT_COLUMN_MAP.mchtName,
-    cell: (info) => info.getValue(),
-  },
-  {
-    accessorKey: "status",
+  }),
+  columnHelper.accessor("status", {
     header: MERCHANT_COLUMN_MAP.status,
     cell: ({ row }) => {
       const status =
@@ -45,5 +39,9 @@ export const merchantTableColumn: ColumnDef<Merchant>[] = [
         </Badge>
       );
     },
-  },
+  }),
+  columnHelper.accessor("mchtCode", {
+    header: MERCHANT_COLUMN_MAP.mchtCode,
+    cell: (info) => info.getValue(),
+  }),
 ];

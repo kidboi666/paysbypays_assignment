@@ -1,4 +1,4 @@
-import type { ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import {
   PAYMENT_COLUMN_MAP,
   PAYMENT_STATUS_MAP,
@@ -11,9 +11,10 @@ import type {
 } from "@/entities/payment/model/types";
 import { Badge } from "@/shared/components/ui/badge";
 
-export const paymentTableColumns: ColumnDef<Payment>[] = [
-  {
-    accessorKey: "paymentAt",
+const columnHelper = createColumnHelper<Payment>();
+
+export const paymentTableColumns = [
+  columnHelper.accessor("paymentAt", {
     header: PAYMENT_COLUMN_MAP.paymentAt,
     cell: ({ row }) => {
       const date = new Date(row.getValue("paymentAt"));
@@ -28,27 +29,23 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
       });
       return <span>{dateFormatter.format(date)}</span>;
     },
-  },
-  {
-    accessorKey: "paymentCode",
+  }),
+  columnHelper.accessor("paymentCode", {
     header: PAYMENT_COLUMN_MAP.paymentCode,
     cell: (info) => info.getValue(),
-  },
-  {
-    accessorKey: "mchtCode",
+  }),
+  columnHelper.accessor("mchtCode", {
     header: PAYMENT_COLUMN_MAP.mchtCode,
     cell: (info) => info.getValue(),
-  },
-  {
-    accessorKey: "payType",
+  }),
+  columnHelper.accessor("payType", {
     header: PAYMENT_COLUMN_MAP.payType,
     cell: ({ row }) => {
       const payType = PAYMENT_TYPE_MAP[row.getValue<PaymentType>("payType")];
       return <Badge variant="outline">{payType.label}</Badge>;
     },
-  },
-  {
-    accessorKey: "status",
+  }),
+  columnHelper.accessor("status", {
     header: PAYMENT_COLUMN_MAP.status,
     cell: ({ row }) => {
       const status = PAYMENT_STATUS_MAP[row.getValue<PaymentStatus>("status")];
@@ -60,24 +57,27 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
         </Badge>
       );
     },
-  },
-  {
-    id: "amount",
-    accessorFn: (row) => {
+  }),
+  columnHelper.accessor(
+    (row) => {
       const amount = parseFloat(row.amount);
+      const currency = row.currency;
       const formattedAmount = new Intl.NumberFormat("ko-KR", {
         style: "currency",
-        currency: row.currency,
+        currency: currency,
       }).format(amount);
-      return `${formattedAmount} ${row.currency}`;
+      return `${formattedAmount} ${currency}`;
     },
-    header: () => (
-      <div className="text-right">
-        <span>{PAYMENT_COLUMN_MAP.amount}</span>
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="text-right font-medium">{row.getValue("amount")}</div>
-    ),
-  },
+    {
+      id: "amount",
+      header: () => (
+        <div className="text-right">
+          <span>{PAYMENT_COLUMN_MAP.amount}</span>
+        </div>
+      ),
+      cell: (info) => {
+        return <div className="text-right font-medium">{info.getValue()}</div>;
+      },
+    },
+  ),
 ];
