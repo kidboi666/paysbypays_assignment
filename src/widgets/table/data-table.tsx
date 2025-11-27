@@ -2,10 +2,12 @@
 
 import {
   type ColumnDef,
+  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
+  type VisibilityState,
 } from "@tanstack/react-table";
 import React from "react";
 import { Input } from "@/shared/components/ui/input";
@@ -39,16 +41,28 @@ export function DataTable<TData, TValue>({
   data,
   labels,
 }: DataTableProps<TData, TValue>) {
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: PAGE_SIZE,
+  });
   const table = useReactTable({
     data,
     columns,
+    state: {
+      pagination,
+      columnVisibility,
+      columnFilters,
+    },
+    onPaginationChange: setPagination,
+    onColumnVisibilityChange: setColumnVisibility,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: {
-        pageSize: PAGE_SIZE,
-      },
-    },
   });
   const [pageInput, setPageInput] = React.useState(
     `${table.getState().pagination.pageIndex + 1}`,
@@ -136,10 +150,10 @@ export function DataTable<TData, TValue>({
               <Input
                 value={pageInput}
                 onChange={(e) => setPageInput(e.target.value)}
-                className="w-12 text-center h-8"
+                className="w-8 text-center h-7 px-1"
               />
             </form>
-            <span className="text-muted-foreground">
+            <span className="text-muted-foreground text-sm">
               / {table.getPageCount()}
             </span>
           </PaginationItem>
