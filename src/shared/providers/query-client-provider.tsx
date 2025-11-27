@@ -2,6 +2,7 @@
 
 import { QueryClientProvider as ReactQueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import type React from "react";
 import { getQueryClient } from "@/shared/lib/query-client/get-query-client";
 
 export function QueryClientProvider({
