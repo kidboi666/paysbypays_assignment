@@ -14,28 +14,38 @@ export const MERCHANT_COLUMN_MAP = {
   bizType: "업종",
 } as const;
 
+export const MERCHANT_DETAIL_COLUMN_MAP = {
+  ...MERCHANT_COLUMN_MAP,
+  bizNo: "사업자 번호",
+  address: "주소",
+  phone: "전화번호",
+  email: "이메일",
+  registeredAt: "등록일",
+  updatedAt: "수정일",
+} as const;
+
 export const MERCHANT_STATUS_MAP: Record<
   MerchantStatus,
   { label: string; className: string; icon: LucideIcon }
 > = {
   READY: {
     label: "준비 중",
-    className: "",
+    className: "bg-yellow-50 text-yellow-500",
     icon: HourglassIcon,
   },
   ACTIVE: {
     label: "영업 중",
-    className: "text-green-500",
+    className: "bg-green-50 text-green-500",
     icon: StoreIcon,
   },
   INACTIVE: {
     label: "마감",
-    className: "text-red-500",
+    className: "bg-red-50 text-red-500",
     icon: DoorClosedIcon,
   },
   CLOSED: {
     label: "폐업",
-    className: "text-gray-500",
+    className: "bg-gray-50 text-gray-500",
     icon: Ban,
   },
 } as const;
@@ -76,4 +86,5 @@ export const MERCHANT_BIZ_TYPE_MAP: Record<
 
 export const MERCHANT_QUERY_KEYS = {
   all: ["merchants"],
+  details: ["merchants", "details"],
 } as const;

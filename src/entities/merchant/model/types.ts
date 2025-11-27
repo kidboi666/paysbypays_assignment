@@ -15,3 +15,16 @@ export interface Merchant {
   status: MerchantStatus;
   bizType: BizType;
 }
+
+export interface MerchantDetail {
+  mchtCode: string;
+  mchtName: string;
+  status: MerchantStatus;
+  bizType: BizType;
+  bizNo: string;
+  address: string;
+  phone: string;
+  email: string;
+  registeredAt: Date;
+  updatedAt: Date;
+}
