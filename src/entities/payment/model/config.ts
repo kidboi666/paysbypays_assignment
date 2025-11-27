@@ -10,6 +10,15 @@ import type {
   PaymentType,
 } from "@/entities/payment/model/types";
 
+export const PAYMENT_COLUMN_CONFIG: Record<string, string> = {
+  paymentAt: "결제 일시",
+  paymentCode: "결제 코드",
+  mchtCode: "가맹점 코드",
+  payType: "결제 유형/수단",
+  amount: "결제 금액",
+  status: "결제 상태",
+};
+
 export const PAYMENT_STATUS_CONFIG: Record<
   PaymentStatus,
   { label: string; className: string; icon: LucideIcon }

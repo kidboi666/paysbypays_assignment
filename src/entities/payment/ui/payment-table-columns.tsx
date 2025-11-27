@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import {
+  PAYMENT_COLUMN_CONFIG,
   PAYMENT_STATUS_CONFIG,
   PAYMENT_TYPE_CONFIG,
 } from "@/entities/payment/model/config";
@@ -20,7 +21,7 @@ const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
 export const paymentTableColumns: ColumnDef<Payment>[] = [
   {
     accessorKey: "paymentAt",
-    header: "결제 일시",
+    header: PAYMENT_COLUMN_CONFIG.paymentAt,
     cell: ({ row }) => {
       const date = new Date(row.getValue("paymentAt"));
       return <span>{dateFormatter.format(date)}</span>;
@@ -28,12 +29,12 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "paymentCode",
-    header: "결제 코드",
+    header: PAYMENT_COLUMN_CONFIG.paymentCode,
     cell: (info) => info.getValue(),
   },
   {
     accessorKey: "mchtCode",
-    header: "가맹점 코드",
+    header: PAYMENT_COLUMN_CONFIG.mchtCode,
     cell: (info) => info.getValue(),
   },
   {
@@ -56,7 +57,7 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
     },
     header: () => (
       <div className="text-right">
-        <span>결제 금액</span>
+        <span>{PAYMENT_COLUMN_CONFIG.amount}</span>
       </div>
     ),
     cell: ({ row }) => (
@@ -65,7 +66,9 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "status",
-    header: () => <div className="text-right">결제 상태</div>,
+    header: () => (
+      <div className="text-right">{PAYMENT_COLUMN_CONFIG.status}</div>
+    ),
     cell: ({ row }) => {
       const status =
         PAYMENT_STATUS_CONFIG[row.getValue<PaymentStatus>("status")];
