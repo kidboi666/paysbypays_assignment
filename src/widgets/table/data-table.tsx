@@ -11,9 +11,7 @@ import React from "react";
 import { Input } from "@/shared/components/ui/input";
 import {
   Pagination,
-  PaginationButton,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationNextButton,
   PaginationPreviousButton,
@@ -26,17 +24,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/components/ui/table";
+import { DataTableViewOptions } from "@/widgets/table/data-table-view-options";
 
-const PAGE_SIZE = 17;
+const PAGE_SIZE = 16;
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  labels: Record<string, string>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  labels,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -60,6 +61,10 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="w-full flex flex-col gap-4">
+      <header className="flex justify-between">
+        <div />
+        <DataTableViewOptions table={table} labels={labels} />
+      </header>
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader className="bg-muted/50">
