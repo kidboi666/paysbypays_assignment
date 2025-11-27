@@ -73,3 +73,7 @@ export const MERCHANT_BIZ_TYPE_MAP: Record<
     className: "",
   },
 } as const;
+
+export const MERCHANT_QUERY_KEYS = {
+  all: ["merchants"],
+} as const;

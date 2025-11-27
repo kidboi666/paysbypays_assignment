@@ -6,11 +6,12 @@ import {
   XIcon,
 } from "lucide-react";
 import type {
+  Payment,
   PaymentStatus,
   PaymentType,
 } from "@/entities/payment/model/types";
 
-export const PAYMENT_COLUMN_MAP = {
+export const PAYMENT_COLUMN_MAP: Partial<Record<keyof Payment, string>> = {
   paymentAt: "결제 일시",
   paymentCode: "결제 코드",
   mchtCode: "가맹점 코드",
@@ -62,3 +63,7 @@ export const PAYMENT_TYPE_MAP: Record<PaymentType, { label: string }> = {
     label: "정기 결제",
   },
 } as const;
+
+export const PAYMENT_QUERY_KEYS = {
+  all: ["payments"],
+};
