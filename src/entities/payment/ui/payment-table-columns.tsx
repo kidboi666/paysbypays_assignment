@@ -11,22 +11,21 @@ import type {
 } from "@/entities/payment/model/types";
 import { Badge } from "@/shared/components/ui/badge";
 
-const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
-  year: "2-digit",
-  month: "2-digit",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit",
-  hour12: false,
-  timeZone: "UTC",
-});
-
 export const paymentTableColumns: ColumnDef<Payment>[] = [
   {
     accessorKey: "paymentAt",
     header: PAYMENT_COLUMN_MAP.paymentAt,
     cell: ({ row }) => {
       const date = new Date(row.getValue("paymentAt"));
+      const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
+        year: "2-digit",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone: "UTC",
+      });
       return <span>{dateFormatter.format(date)}</span>;
     },
   },
