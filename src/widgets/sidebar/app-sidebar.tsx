@@ -29,7 +29,7 @@ interface AppSidebarProps {
 
 export function AppSidebar({ pathname }: AppSidebarProps) {
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
         <SidebarTrigger size="lg" />
       </SidebarHeader>
