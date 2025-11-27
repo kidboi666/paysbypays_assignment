@@ -5,6 +5,7 @@ import {
   MERCHANT_STATUS_MAP,
 } from "@/entities/merchant/model/constants";
 import type { Merchant } from "@/entities/merchant/model/types";
+import { MerchantTableCellViewer } from "@/entities/merchant/ui/merchant-table-cell-viewer";
 import { CopyableCell } from "@/shared/components/copyable-cell";
 import { Badge } from "@/shared/components/ui/badge";
 import { cn } from "@/shared/lib/utils";
@@ -14,7 +15,7 @@ const columnHelper = createColumnHelper<Merchant>();
 export const merchantTableColumn = [
   columnHelper.accessor("mchtName", {
     header: MERCHANT_COLUMN_MAP.mchtName,
-    cell: (info) => <CopyableCell cellText={info.getValue()} showIcon />,
+    cell: (info) => <MerchantTableCellViewer item={info.row.original} />,
     enableHiding: false,
   }),
   columnHelper.accessor("bizType", {
