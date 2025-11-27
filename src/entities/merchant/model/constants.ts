@@ -29,17 +29,17 @@ export const MERCHANT_STATUS_MAP: Record<
   { label: string; className: string; icon: LucideIcon }
 > = {
   READY: {
-    label: "준비 중",
+    label: "준비중",
     className: "bg-yellow-50 text-yellow-500",
     icon: HourglassIcon,
   },
   ACTIVE: {
-    label: "영업 중",
+    label: "영업중",
     className: "bg-green-50 text-green-500",
     icon: StoreIcon,
   },
   INACTIVE: {
-    label: "마감",
+    label: "영업마감",
     className: "bg-red-50 text-red-500",
     icon: DoorClosedIcon,
   },
