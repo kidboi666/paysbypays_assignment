@@ -17,19 +17,20 @@ import { DataTableViewOptions } from "@/widgets/table/data-table-view-options";
 
 const PAGE_SIZE = 16;
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData> {
   tableName: string;
-  columns: ColumnDef<TData, TValue>[];
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  columns: ColumnDef<TData, any>[];
   data: TData[];
   labels: Record<string, string>;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData>({
   tableName,
   columns,
   data,
   labels,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const isMounted = useIsMounted();
   const [columnVisibility, setColumnVisibility] =
     useLocalStorage<VisibilityState>(
