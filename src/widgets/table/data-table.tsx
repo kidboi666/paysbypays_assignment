@@ -7,6 +7,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import {
   Table,
@@ -96,7 +97,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            <ChevronLeft />
           </Button>
           <Button
             variant="outline"
@@ -104,7 +105,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            <ChevronRight />
           </Button>
         </div>
       </div>
