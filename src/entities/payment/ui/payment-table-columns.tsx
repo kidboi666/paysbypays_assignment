@@ -1,12 +1,15 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import {
-  PAYMENT_COLUMN_CONFIG,
-  PAYMENT_STATUS_CONFIG,
-  PAYMENT_TYPE_CONFIG,
-} from "@/entities/payment/model/config";
-import type { Payment, PaymentStatus } from "@/entities/payment/model/types";
+  PAYMENT_COLUMN_MAP,
+  PAYMENT_STATUS_MAP,
+  PAYMENT_TYPE_MAP,
+} from "@/entities/payment/model/constants";
+import type {
+  Payment,
+  PaymentStatus,
+  PaymentType,
+} from "@/entities/payment/model/types";
 import { Badge } from "@/shared/components/ui/badge";
-import { cn } from "@/shared/lib/utils";
 
 const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
   year: "2-digit",
@@ -21,7 +24,7 @@ const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
 export const paymentTableColumns: ColumnDef<Payment>[] = [
   {
     accessorKey: "paymentAt",
-    header: PAYMENT_COLUMN_CONFIG.paymentAt,
+    header: PAYMENT_COLUMN_MAP.paymentAt,
     cell: ({ row }) => {
       const date = new Date(row.getValue("paymentAt"));
       return <span>{dateFormatter.format(date)}</span>;
@@ -29,24 +32,24 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "paymentCode",
-    header: PAYMENT_COLUMN_CONFIG.paymentCode,
+    header: PAYMENT_COLUMN_MAP.paymentCode,
     cell: (info) => info.getValue(),
   },
   {
     accessorKey: "mchtCode",
-    header: PAYMENT_COLUMN_CONFIG.mchtCode,
+    header: PAYMENT_COLUMN_MAP.mchtCode,
     cell: (info) => info.getValue(),
   },
   {
     accessorKey: "payType",
-    accessorFn: (row) => PAYMENT_TYPE_CONFIG[row.payType].label,
-    header: "결제 유형/수단",
-    cell: ({ row }) => (
-      <Badge variant="outline">{row.getValue("payType")}</Badge>
-    ),
+    header: PAYMENT_COLUMN_MAP.payType,
+    cell: ({ row }) => {
+      const payType = PAYMENT_TYPE_MAP[row.getValue<PaymentType>("payType")];
+      return <Badge variant="outline">{payType.label}</Badge>;
+    },
   },
   {
-    accessorKey: "amount",
+    id: "amount",
     accessorFn: (row) => {
       const amount = parseFloat(row.amount);
       const formattedAmount = new Intl.NumberFormat("ko-KR", {
@@ -57,7 +60,7 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
     },
     header: () => (
       <div className="text-right">
-        <span>{PAYMENT_COLUMN_CONFIG.amount}</span>
+        <span>{PAYMENT_COLUMN_MAP.amount}</span>
       </div>
     ),
     cell: ({ row }) => (
@@ -66,21 +69,17 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "status",
-    header: () => (
-      <div className="text-right">{PAYMENT_COLUMN_CONFIG.status}</div>
-    ),
+    header: () => <div className="text-right">{PAYMENT_COLUMN_MAP.status}</div>,
     cell: ({ row }) => {
-      const status =
-        PAYMENT_STATUS_CONFIG[row.getValue<PaymentStatus>("status")];
+      const status = PAYMENT_STATUS_MAP[row.getValue<PaymentStatus>("status")];
       const Icon = status.icon;
       return (
-        <Badge
-          variant="outline"
-          className={cn("lowercase text-right", status.className)}
-        >
-          <Icon />
-          {status.label}
-        </Badge>
+        <div className="text-right">
+          <Badge variant="outline" className={status.className}>
+            <Icon />
+            {status.label}
+          </Badge>
+        </div>
       );
     },
   },

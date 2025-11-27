@@ -7,7 +7,14 @@ import {
 } from "lucide-react";
 import type { BizType, MerchantStatus } from "@/entities/merchant/model/types";
 
-export const MERCHANT_STATUS_CONFIG: Record<
+export const MERCHANT_COLUMN_MAP = {
+  mchtCode: "가맹점 코드",
+  mchtName: "가맹점명",
+  status: "영업 상태",
+  bizType: "업종",
+} as const;
+
+export const MERCHANT_STATUS_MAP: Record<
   MerchantStatus,
   { label: string; className: string; icon: LucideIcon }
 > = {
@@ -33,7 +40,7 @@ export const MERCHANT_STATUS_CONFIG: Record<
   },
 };
 
-export const MERCHANT_BIZ_TYPE_CONFIG: Record<
+export const MERCHANT_BIZ_TYPE_MAP: Record<
   BizType,
   { label: string; className: string }
 > = {

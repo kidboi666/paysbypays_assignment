@@ -1,6 +1,7 @@
 "use client";
 
 import { usePayments } from "@/entities/payment/api/use-payments";
+import { PAYMENT_COLUMN_MAP } from "@/entities/payment/model/constants";
 import { paymentTableColumns } from "@/entities/payment/ui/payment-table-columns";
 import { PageBreadcrumb } from "@/widgets/breadcrumb/page-breadcrumb";
 import { DataTable } from "@/widgets/table/data-table";
@@ -16,7 +17,11 @@ export default function PaymentsPage() {
   return (
     <main className="p-4 space-y-4 flex flex-1 flex-col overflow-auto">
       <PageBreadcrumb items={breadcrumbItems} />
-      <DataTable columns={paymentTableColumns} data={data} />
+      <DataTable
+        columns={paymentTableColumns}
+        data={data}
+        labels={PAYMENT_COLUMN_MAP}
+      />
     </main>
   );
 }
