@@ -15,6 +15,7 @@ export default function MerchantsPage() {
     <main className="p-4 space-y-4 flex flex-1 flex-col overflow-auto">
       <PageBreadcrumb items={breadcrumbItems} />
       <DataTable
+        tableName="merchants"
         columns={merchantTableColumn}
         data={data}
         labels={MERCHANT_COLUMN_MAP}

@@ -10,6 +10,7 @@ import {
   type VisibilityState,
 } from "@tanstack/react-table";
 import React from "react";
+import { useLocalStorage } from "usehooks-ts";
 import { Input } from "@/shared/components/ui/input";
 import {
   Pagination,
@@ -31,22 +32,25 @@ import { DataTableViewOptions } from "@/widgets/table/data-table-view-options";
 const PAGE_SIZE = 16;
 
 interface DataTableProps<TData, TValue> {
+  tableName: string;
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   labels: Record<string, string>;
 }
 
 export function DataTable<TData, TValue>({
+  tableName,
   columns,
   data,
   labels,
 }: DataTableProps<TData, TValue>) {
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    useLocalStorage<VisibilityState>(`${tableName}-column-visibility`, {});
+  const [columnFilters, setColumnFilters] = useLocalStorage<ColumnFiltersState>(
+    "column-filters",
     [],
   );
-  const [pagination, setPagination] = React.useState({
+  const [pagination, setPagination] = useLocalStorage("pagination", {
     pageIndex: 0,
     pageSize: PAGE_SIZE,
   });
