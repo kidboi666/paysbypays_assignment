@@ -25,23 +25,23 @@ export const PAYMENT_STATUS_MAP: Record<
   { label: string; className: string; icon: LucideIcon }
 > = {
   PENDING: {
-    label: "대기 중",
-    className: "",
+    label: "결제대기",
+    className: "bg-yellow-50 text-yellow-500",
     icon: ClockIcon,
   },
   SUCCESS: {
-    label: "성공",
-    className: "text-green-500",
+    label: "결제완료",
+    className: "bg-green-50 text-green-500",
     icon: CheckIcon,
   },
   FAILED: {
-    label: "실패",
-    className: "text-red-500",
+    label: "결제실패",
+    className: "bg-red-50 text-red-500",
     icon: XIcon,
   },
   CANCELLED: {
-    label: "취소",
-    className: "text-gray-500",
+    label: "결제취소",
+    className: "bg-gray-50 text-gray-500",
     icon: BanIcon,
   },
 } as const;

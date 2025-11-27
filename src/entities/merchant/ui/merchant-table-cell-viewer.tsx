@@ -1,3 +1,4 @@
+import { ArrowUpRightIcon } from "lucide-react";
 import type { Merchant } from "@/entities/merchant/model/types";
 import { Button } from "@/shared/components/ui/button";
 import {
@@ -21,6 +22,7 @@ export function MerchantTableCellViewer({ item }: DataTableCellViewerProps) {
       <DrawerTrigger asChild>
         <Button variant="link" className="!p-0 h-fit">
           {item.mchtName}
+          <ArrowUpRightIcon className="text-primary/50" />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
