@@ -3,7 +3,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { PanelLeftIcon } from "lucide-react";
-import * as React from "react";
+import React from "react";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Separator } from "@/shared/components/ui/separator";
@@ -60,6 +60,7 @@ function SidebarProvider({
 }) {
   const isMobile = useIsMobile();
   const [openMobile, setOpenMobile] = React.useState(false);
+  const prevIsMobile = React.useRef(isMobile);
 
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
@@ -120,9 +121,13 @@ function SidebarProvider({
   );
 
   React.useEffect(() => {
-    if (isMobile) {
+    if (isMobile && !prevIsMobile.current) {
       setOpen(false);
+    } else if (!isMobile && prevIsMobile.current) {
+      setOpen(true);
     }
+
+    prevIsMobile.current = isMobile;
   }, [setOpen, isMobile]);
 
   return (
