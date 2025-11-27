@@ -43,7 +43,7 @@ export const PAYMENT_STATUS_MAP: Record<
     className: "text-gray-500",
     icon: BanIcon,
   },
-};
+} as const;
 
 export const PAYMENT_TYPE_MAP: Record<PaymentType, { label: string }> = {
   ONLINE: {
@@ -61,4 +61,4 @@ export const PAYMENT_TYPE_MAP: Record<PaymentType, { label: string }> = {
   BILLING: {
     label: "정기 결제",
   },
-};
+} as const;

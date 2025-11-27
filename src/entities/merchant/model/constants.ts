@@ -38,7 +38,7 @@ export const MERCHANT_STATUS_MAP: Record<
     className: "text-gray-500",
     icon: Ban,
   },
-};
+} as const;
 
 export const MERCHANT_BIZ_TYPE_MAP: Record<
   BizType,
@@ -72,4 +72,4 @@ export const MERCHANT_BIZ_TYPE_MAP: Record<
     label: "여행",
     className: "",
   },
-};
+} as const;
