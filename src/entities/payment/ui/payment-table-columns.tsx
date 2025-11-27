@@ -4,6 +4,7 @@ import {
   PAYMENT_TYPE_CONFIG,
 } from "@/entities/payment/model/config";
 import type { Payment, PaymentStatus } from "@/entities/payment/model/types";
+import { Badge } from "@/shared/components/ui/badge";
 import { cn } from "@/shared/lib/utils";
 
 const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
@@ -39,7 +40,9 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
     accessorKey: "payType",
     accessorFn: (row) => PAYMENT_TYPE_CONFIG[row.payType].label,
     header: "결제 유형/수단",
-    cell: (info) => info.getValue(),
+    cell: ({ row }) => (
+      <Badge variant="outline">{row.getValue("payType")}</Badge>
+    ),
   },
   {
     accessorKey: "amount",
@@ -47,7 +50,7 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
       const amount = parseFloat(row.amount);
       const formattedAmount = new Intl.NumberFormat("ko-KR", {
         style: "currency",
-        currency: "KRW",
+        currency: row.currency,
       }).format(amount);
       return `${formattedAmount} ${row.currency}`;
     },
@@ -66,10 +69,15 @@ export const paymentTableColumns: ColumnDef<Payment>[] = [
     cell: ({ row }) => {
       const status =
         PAYMENT_STATUS_CONFIG[row.getValue<PaymentStatus>("status")];
+      const Icon = status.icon;
       return (
-        <div className={cn("lowercase text-right", status.className)}>
+        <Badge
+          variant="outline"
+          className={cn("lowercase text-right", status.className)}
+        >
+          <Icon />
           {status.label}
-        </div>
+        </Badge>
       );
     },
   },

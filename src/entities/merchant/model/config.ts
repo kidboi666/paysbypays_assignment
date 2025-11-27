@@ -1,24 +1,35 @@
+import {
+  Ban,
+  DoorClosedIcon,
+  HourglassIcon,
+  type LucideIcon,
+  StoreIcon,
+} from "lucide-react";
 import type { BizType, MerchantStatus } from "@/entities/merchant/model/types";
 
 export const MERCHANT_STATUS_CONFIG: Record<
   MerchantStatus,
-  { label: string; className: string }
+  { label: string; className: string; icon: LucideIcon }
 > = {
   READY: {
     label: "준비 중",
     className: "",
+    icon: HourglassIcon,
   },
   ACTIVE: {
     label: "영업 중",
     className: "text-green-500",
+    icon: StoreIcon,
   },
   INACTIVE: {
     label: "마감",
     className: "text-red-500",
+    icon: DoorClosedIcon,
   },
   CLOSED: {
     label: "폐업",
     className: "text-gray-500",
+    icon: Ban,
   },
 };
 
