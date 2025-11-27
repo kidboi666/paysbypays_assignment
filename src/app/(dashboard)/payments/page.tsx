@@ -14,7 +14,7 @@ export default function PaymentsPage() {
   const { data } = usePayments();
 
   return (
-    <main className="p-4 space-y-4 flex flex-1 flex-col">
+    <main className="p-4 space-y-4 flex flex-1 flex-col overflow-auto">
       <PageBreadcrumb items={breadcrumbItems} />
       <DataTable columns={paymentTableColumns} data={data} />
     </main>
