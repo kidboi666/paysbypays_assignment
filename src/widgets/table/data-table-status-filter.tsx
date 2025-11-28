@@ -24,6 +24,7 @@ interface DataTableStatusFilterProps<TData, TFilter extends string> {
   labels: Record<TFilter, LabelType>;
   onChange: (value?: string) => void;
   filterKey: string;
+  columnLabels: Record<string, string>;
 }
 
 export function DataTableStatusFilter<TData, TFilter extends string>({
@@ -32,6 +33,7 @@ export function DataTableStatusFilter<TData, TFilter extends string>({
   value,
   onChange,
   filterKey,
+  columnLabels,
 }: DataTableStatusFilterProps<TData, TFilter>) {
   const isMobile = useIsMobile();
 
@@ -48,13 +50,13 @@ export function DataTableStatusFilter<TData, TFilter extends string>({
             )}
             onClick={() => onChange()}
           >
-            결제 상태
+            {columnLabels[filterKey]}
             <ChevronDown />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuRadioGroup value={value}>
-            <DropdownMenuRadioItem value={""}>
+            <DropdownMenuRadioItem value={""} onClick={() => onChange()}>
               전체
               <Badge>{table?.getCoreRowModel()?.rows.length}</Badge>
             </DropdownMenuRadioItem>

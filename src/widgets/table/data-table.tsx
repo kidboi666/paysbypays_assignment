@@ -102,6 +102,7 @@ export function DataTable<TData, TFilter extends string>({
           labels={filterLabels}
           onChange={handleChangeFilterValue}
           filterKey="status"
+          columnLabels={columnLabels}
         />
         <DataTableViewOptions table={table} labels={columnLabels} />
       </header>
