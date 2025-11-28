@@ -104,6 +104,7 @@ export function DataTableStatusFilter<TData, TFilter extends string>({
           {table?.getCoreRowModel()?.rows.length}
         </Badge>
       </Button>
+      {/* FIXME: 상용 서비스일 경우 이 부분은 서버측  로직에서 개선 필요, 과제 특성상 임시 구현 */}
       {(Object.entries(labels) as [TFilter, LabelType][]).map(([key, val]) => {
         const count = table
           ?.getCoreRowModel()

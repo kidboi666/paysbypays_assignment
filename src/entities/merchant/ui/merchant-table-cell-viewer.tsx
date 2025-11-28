@@ -28,6 +28,7 @@ export function MerchantTableCellViewer({ item }: DataTableCellViewerProps) {
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>{item.mchtName}</DrawerTitle>
+          {/*  TODO: 가맹점 상세 정보를 담은 드로어 구현 필요 */}
         </DrawerHeader>
       </DrawerContent>
     </Drawer>
