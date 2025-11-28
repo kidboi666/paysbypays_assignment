@@ -23,6 +23,16 @@ npm run dev
 
 ### 환경 변수 설정
 
+**루트에 `.env.local` 파일 생성 후 아래 코드를 입력해주세요.**
+
+```dotenv
+NEXT_PUBLIC_API_URL=https://recruit.paysbypays.com/api/v1
+```
+
+### 환경 변수 설정
+
+**루트에 `.env.local` 파일 생성 후 아래 코드를 입력해주세요.**
+
 ```dotenv
 NEXT_PUBLIC_API_URL=https://recruit.paysbypays.com/api/v1
 ```
@@ -31,10 +41,13 @@ NEXT_PUBLIC_API_URL=https://recruit.paysbypays.com/api/v1
 - **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui, Lucide Icons
+- **UI Components**: shadcn/ui (출처: https://ui.shadcn.com), Lucide Icons
 - **State Management**: TanStack Query (React Query)
 - **Table**: TanStack Table
 - **Linter/Formatter**: Biome
+
+### UI/UX 디자인 의도
+빠른 UI 구축과 일관된 디자인 시스템 유지를 위해 `shadcn/ui`와 `Tailwind CSS`를 채택했습니다. 별도의 디자인 시스템 개발보다는 기능 구현 및 비즈니스 로직 연동에 집중하여, 깔끔하고 기능적인 대시보드 UI를 제공하는 데 중점을 두었습니다.
 
 ## 주요 기능
 
