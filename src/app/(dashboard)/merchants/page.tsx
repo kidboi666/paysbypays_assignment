@@ -6,8 +6,8 @@ import {
   MERCHANT_STATUS_MAP,
 } from "@/entities/merchant/model/constants";
 import { merchantDetailTableColumns } from "@/entities/merchant/ui/merchant-detail-table-columns";
-import { PageBreadcrumb } from "@/widgets/breadcrumb/page-breadcrumb";
-import { DataTable } from "@/widgets/table/data-table";
+import { PageBreadcrumb } from "@/shared/components/page-breadcrumb";
+import { DataTable } from "@/shared/components/table/data-table";
 
 const breadcrumbItems = [{ label: "홈", href: "/" }, { label: "가맹점 관리" }];
 

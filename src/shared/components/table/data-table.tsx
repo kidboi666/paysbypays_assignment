@@ -12,11 +12,11 @@ import {
 import type { LucideIcon } from "lucide-react";
 import React from "react";
 import { useLocalStorage } from "usehooks-ts";
+import { DataTableContent } from "@/shared/components/table/data-table-content";
+import { DataTablePagination } from "@/shared/components/table/data-table-pagination";
+import { DataTableStatusFilter } from "@/shared/components/table/data-table-status-filter";
+import { DataTableViewOptions } from "@/shared/components/table/data-table-view-options";
 import { LOCAL_STORAGE_KEY } from "@/shared/model/constants";
-import { DataTableContent } from "@/widgets/table/data-table-content";
-import { DataTablePagination } from "@/widgets/table/data-table-pagination";
-import { DataTableStatusFilter } from "@/widgets/table/data-table-status-filter";
-import { DataTableViewOptions } from "@/widgets/table/data-table-view-options";
 
 const DETAIL_PAGE_SIZE = 16;
 
