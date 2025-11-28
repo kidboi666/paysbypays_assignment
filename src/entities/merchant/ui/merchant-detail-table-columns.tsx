@@ -1,4 +1,4 @@
-import { createColumnHelper } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import {
   MERCHANT_BIZ_TYPE_MAP,
   MERCHANT_DETAIL_COLUMN_MAP,
@@ -10,10 +10,9 @@ import { CopyableCell } from "@/shared/components/copyable-cell";
 import { Badge } from "@/shared/components/ui/badge";
 import { cn } from "@/shared/lib/utils";
 
-const columnHelper = createColumnHelper<MerchantDetail>();
-
-export const merchantDetailTableColumns = [
-  columnHelper.accessor("status", {
+export const merchantDetailTableColumns: ColumnDef<MerchantDetail>[] = [
+  {
+    accessorKey: "status",
     header: MERCHANT_DETAIL_COLUMN_MAP.status,
     cell: ({ row }) => {
       const status = MERCHANT_STATUS_MAP[row.original.status];
@@ -28,43 +27,58 @@ export const merchantDetailTableColumns = [
         </Badge>
       );
     },
-  }),
-  columnHelper.accessor("mchtName", {
+  },
+  {
+    accessorKey: "mchtName",
     header: MERCHANT_DETAIL_COLUMN_MAP.mchtName,
     cell: (info) => <MerchantTableCellViewer item={info.row.original} />,
     enableHiding: false,
-  }),
-  columnHelper.accessor("bizType", {
+  },
+  {
+    accessorKey: "bizType",
     header: MERCHANT_DETAIL_COLUMN_MAP.bizType,
     cell: ({ row }) => {
       const bizType = MERCHANT_BIZ_TYPE_MAP[row.original.bizType];
       return <Badge variant="outline">{bizType.label}</Badge>;
     },
-  }),
-  columnHelper.accessor("bizNo", {
+  },
+  {
+    accessorKey: "bizNo",
     header: MERCHANT_DETAIL_COLUMN_MAP.bizNo,
-    cell: (info) => <CopyableCell cellText={info.getValue()} showIcon />,
-  }),
-  columnHelper.accessor("address", {
+    cell: ({ row }) => (
+      <CopyableCell cellText={row.getValue("bizNo")} showIcon />
+    ),
+  },
+  {
+    accessorKey: "address",
     header: MERCHANT_DETAIL_COLUMN_MAP.address,
-    cell: (info) => <CopyableCell cellText={info.getValue()} showIcon />,
-  }),
-  columnHelper.accessor("phone", {
+    cell: ({ row }) => (
+      <CopyableCell cellText={row.getValue("address")} showIcon />
+    ),
+  },
+  {
+    accessorKey: "phone",
     header: MERCHANT_DETAIL_COLUMN_MAP.phone,
-    cell: (info) => <CopyableCell cellText={info.getValue()} showIcon />,
-  }),
-  columnHelper.accessor("email", {
+    cell: ({ row }) => (
+      <CopyableCell cellText={row.getValue("phone")} showIcon />
+    ),
+  },
+  {
+    accessorKey: "email",
     header: MERCHANT_DETAIL_COLUMN_MAP.email,
-    cell: (info) => <CopyableCell cellText={info.getValue()} showIcon />,
-  }),
-  columnHelper.accessor("mchtCode", {
+    cell: ({ row }) => (
+      <CopyableCell cellText={row.getValue("email")} showIcon />
+    ),
+  },
+  {
+    accessorKey: "mchtCode",
     header: MERCHANT_DETAIL_COLUMN_MAP.mchtCode,
-    cell: (info) => (
+    cell: ({ row }) => (
       <CopyableCell
-        cellText={info.getValue()}
+        cellText={row.getValue("mchtCode")}
         showIcon
         className="opacity-50"
       />
     ),
-  }),
+  },
 ];

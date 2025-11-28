@@ -1,4 +1,4 @@
-import { createColumnHelper } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import {
   PAYMENT_COLUMN_MAP,
   PAYMENT_STATUS_MAP,
@@ -9,10 +9,9 @@ import { CopyableCell } from "@/shared/components/copyable-cell";
 import { Badge } from "@/shared/components/ui/badge";
 import { cn } from "@/shared/lib/utils";
 
-const columnHelper = createColumnHelper<Payment>();
-
-export const paymentTableColumns = [
-  columnHelper.accessor("status", {
+export const paymentTableColumns: ColumnDef<Payment>[] = [
+  {
+    accessorKey: "status",
     header: PAYMENT_COLUMN_MAP.status,
     cell: ({ row }) => {
       const status = PAYMENT_STATUS_MAP[row.original.status];
@@ -27,8 +26,9 @@ export const paymentTableColumns = [
         </Badge>
       );
     },
-  }),
-  columnHelper.accessor("paymentAt", {
+  },
+  {
+    accessorKey: "paymentAt",
     header: PAYMENT_COLUMN_MAP.paymentAt,
     cell: ({ row }) => {
       const date = new Date(row.original.paymentAt);
@@ -44,18 +44,18 @@ export const paymentTableColumns = [
       return <CopyableCell cellText={dateFormatter.format(date)} showIcon />;
     },
     enableHiding: false,
-  }),
-
-  columnHelper.accessor("payType", {
+  },
+  {
+    accessorKey: "payType",
     header: PAYMENT_COLUMN_MAP.payType,
     cell: ({ row }) => {
       const payType = PAYMENT_TYPE_MAP[row.original.payType];
       return <Badge variant="outline">{payType.label}</Badge>;
     },
-  }),
-
-  columnHelper.accessor(
-    (row) => {
+  },
+  {
+    id: "amount",
+    accessorFn: (row) => {
       const amount = parseFloat(row.amount);
       const currency = row.currency;
       return new Intl.NumberFormat("ko-KR", {
@@ -63,41 +63,40 @@ export const paymentTableColumns = [
         currency: currency,
       }).format(amount);
     },
-    {
-      id: "amount",
-      header: () => (
-        <div className="text-right">
-          <span>{PAYMENT_COLUMN_MAP.amount}</span>
+    header: () => (
+      <div className="text-right">
+        <span>{PAYMENT_COLUMN_MAP.amount}</span>
+      </div>
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="text-right font-medium">
+          <span>{row.getValue("amount")} </span>
+          <span className="opacity-50">{row.original.currency}</span>
         </div>
-      ),
-      cell: (info) => {
-        return (
-          <div className="text-right font-medium">
-            <span>{info.getValue()} </span>
-            <span className="opacity-50">{info.row.original.currency}</span>
-          </div>
-        );
-      },
+      );
     },
-  ),
-  columnHelper.accessor("paymentCode", {
+  },
+  {
+    accessorKey: "paymentCode",
     header: PAYMENT_COLUMN_MAP.paymentCode,
-    cell: (info) => (
+    cell: ({ row }) => (
       <CopyableCell
-        cellText={info.getValue()}
+        cellText={row.getValue("paymentCode")}
         showIcon
         className="opacity-50"
       />
     ),
-  }),
-  columnHelper.accessor("mchtCode", {
+  },
+  {
+    accessorKey: "mchtCode",
     header: PAYMENT_COLUMN_MAP.mchtCode,
-    cell: (info) => (
+    cell: ({ row }) => (
       <CopyableCell
-        cellText={info.getValue()}
+        cellText={row.getValue("mchtCode")}
         showIcon
         className="opacity-50"
       />
     ),
-  }),
+  },
 ];

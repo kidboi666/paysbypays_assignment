@@ -11,7 +11,7 @@ import {
 } from "@tanstack/react-table";
 import type { LucideIcon } from "lucide-react";
 import React from "react";
-import { useIsMounted, useLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "usehooks-ts";
 import { LOCAL_STORAGE_KEY } from "@/shared/model/constants";
 import { DataTableContent } from "@/widgets/table/data-table-content";
 import { DataTablePagination } from "@/widgets/table/data-table-pagination";
@@ -22,7 +22,7 @@ const PAGE_SIZE = 16;
 
 interface DataTableProps<TData, TFilter extends string> {
   tableName: string;
-  columns: ColumnDef<TData, any>[];
+  columns: ColumnDef<TData, TData>[];
   data: TData[];
   columnLabels: Record<string, string>;
   filterLabels: Record<
@@ -38,7 +38,12 @@ export function DataTable<TData, TFilter extends string>({
   columnLabels,
   filterLabels,
 }: DataTableProps<TData, TFilter>) {
-  const isMounted = useIsMounted();
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const [columnVisibility, setColumnVisibility] =
     useLocalStorage<VisibilityState>(
       LOCAL_STORAGE_KEY.columnVisibility(tableName),
@@ -48,23 +53,18 @@ export function DataTable<TData, TFilter extends string>({
     LOCAL_STORAGE_KEY.columnFilters(tableName),
     [],
   );
-  const [pagination, setPagination] = useLocalStorage(
-    LOCAL_STORAGE_KEY.pagination,
-    {
-      pageIndex: 0,
-      pageSize: PAGE_SIZE,
-    },
-  );
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: PAGE_SIZE,
+  });
 
   const table = useReactTable({
     data,
     columns,
     state: {
-      pagination: isMounted()
-        ? pagination
-        : { pageIndex: 0, pageSize: PAGE_SIZE },
-      columnVisibility: isMounted() ? columnVisibility : {},
-      columnFilters: isMounted() ? columnFilters : [],
+      pagination,
+      columnFilters: isMounted ? columnFilters : [],
+      columnVisibility: isMounted ? columnVisibility : {},
     },
     onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
@@ -72,19 +72,26 @@ export function DataTable<TData, TFilter extends string>({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    autoResetPageIndex: false,
   });
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Reset pagination when filters change
+  React.useEffect(() => {
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+  }, [columnFilters]);
+
   const [pageInput, setPageInput] = React.useState(
     `${table.getState().pagination.pageIndex + 1}`,
   );
+
+  const handleChangeFilterValue = (value?: string) => {
+    table.getColumn("status")?.setFilterValue(value);
+  };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   React.useEffect(() => {
     setPageInput(`${table.getState().pagination.pageIndex + 1}`);
   }, [table.getState().pagination.pageIndex]);
-
-  const handleChangeFilterValue = (value?: string) => {
-    table.getColumn("status")?.setFilterValue(value);
-  };
 
   return (
     <div className="w-full flex flex-col gap-4">
