@@ -20,9 +20,9 @@ import { DataTableViewOptions } from "@/widgets/table/data-table-view-options";
 
 const PAGE_SIZE = 16;
 
-interface DataTableProps<TData, TFilter extends string> {
+interface DataTableProps<TData, TValue, TFilter extends string> {
   tableName: string;
-  columns: ColumnDef<TData, TData>[];
+  columns: ColumnDef<TData, TValue>[];
   data: TData[];
   columnLabels: Record<string, string>;
   filterLabels: Record<
@@ -31,13 +31,13 @@ interface DataTableProps<TData, TFilter extends string> {
   >;
 }
 
-export function DataTable<TData, TFilter extends string>({
+export function DataTable<TData, TValue, TFilter extends string>({
   tableName,
   columns,
   data,
   columnLabels,
   filterLabels,
-}: DataTableProps<TData, TFilter>) {
+}: DataTableProps<TData, TValue, TFilter>) {
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
