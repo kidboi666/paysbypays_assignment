@@ -41,22 +41,22 @@ export function DataTableStatusFilter<TData, TFilter extends string>({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            size="sm"
-            variant="outline"
-            className={cn(
-              "text-muted-foreground",
-              value === undefined ? "text-primary" : "text-muted-foreground",
-            )}
-            onClick={() => onChange()}
-          >
-            {columnLabels[filterKey]}
+          <Button size="sm" variant="outline" onClick={() => onChange()}>
+            {value ? labels[value as TFilter].label : columnLabels[filterKey]}
             <ChevronDown />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuRadioGroup value={value}>
-            <DropdownMenuRadioItem value={""} onClick={() => onChange()}>
+            <DropdownMenuRadioItem
+              value={""}
+              onClick={() => onChange()}
+              className={cn(
+                value === "" || value === undefined
+                  ? "text-primary"
+                  : "text-muted-foreground",
+              )}
+            >
               전체
               <Badge>{table?.getCoreRowModel()?.rows.length}</Badge>
             </DropdownMenuRadioItem>
@@ -94,13 +94,15 @@ export function DataTableStatusFilter<TData, TFilter extends string>({
         size="sm"
         variant="ghost"
         className={cn(
-          "text-muted-foreground",
+          "text-muted-foreground py-1 px-2",
           value === undefined ? "text-primary" : "text-muted-foreground",
         )}
         onClick={() => onChange()}
       >
         전체
-        <Badge>{table?.getCoreRowModel()?.rows.length}</Badge>
+        <Badge variant="secondary">
+          {table?.getCoreRowModel()?.rows.length}
+        </Badge>
       </Button>
       {(Object.entries(labels) as [TFilter, LabelType][]).map(([key, val]) => {
         const count = table
@@ -112,6 +114,7 @@ export function DataTableStatusFilter<TData, TFilter extends string>({
             variant="ghost"
             size="sm"
             className={cn(
+              "py-1 px-2",
               value === key ? "text-primary" : "text-muted-foreground",
             )}
             onClick={() => onChange(key)}
