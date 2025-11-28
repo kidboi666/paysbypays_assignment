@@ -1,48 +1,49 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import {
-  MERCHANT_BIZ_TYPE_CONFIG,
-  MERCHANT_STATUS_CONFIG,
-} from "@/entities/merchant/model/config";
-import type {
-  BizType,
-  Merchant,
-  MerchantStatus,
-} from "@/entities/merchant/model/types";
+  MERCHANT_BIZ_TYPE_MAP,
+  MERCHANT_COLUMN_MAP,
+  MERCHANT_STATUS_MAP,
+} from "@/entities/merchant/model/constants";
+import type { Merchant } from "@/entities/merchant/model/types";
+import { MerchantTableCellViewer } from "@/entities/merchant/ui/merchant-table-cell-viewer";
+import { CopyableCell } from "@/shared/components/copyable-cell";
+import { Badge } from "@/shared/components/ui/badge";
 import { cn } from "@/shared/lib/utils";
 
 export const merchantTableColumn: ColumnDef<Merchant>[] = [
   {
-    accessorKey: "mchtCode",
-    header: "가맹점 코드",
-    minSize: 80,
-    cell: (info) => info.getValue(),
+    accessorKey: "mchtName",
+    header: MERCHANT_COLUMN_MAP.mchtName,
+    cell: (info) => <MerchantTableCellViewer item={info.row.original} />,
+    enableHiding: false,
   },
   {
     accessorKey: "bizType",
-    header: "업종",
-    minSize: 80,
+    header: MERCHANT_COLUMN_MAP.bizType,
     cell: ({ row }) => {
-      const bizType =
-        MERCHANT_BIZ_TYPE_CONFIG[row.getValue<BizType>("bizType")];
-      return <div>{bizType.label}</div>;
+      const bizType = MERCHANT_BIZ_TYPE_MAP[row.original.bizType];
+      return <Badge variant="outline">{bizType.label}</Badge>;
     },
-  },
-  {
-    accessorKey: "mchtName",
-    header: "가맹점명",
-    minSize: 600,
-    cell: (info) => info.getValue(),
   },
   {
     accessorKey: "status",
-    header: "영업 상태",
-    minSize: 80,
+    header: MERCHANT_COLUMN_MAP.status,
     cell: ({ row }) => {
-      const status =
-        MERCHANT_STATUS_CONFIG[row.getValue<MerchantStatus>("status")];
+      const status = MERCHANT_STATUS_MAP[row.original.status];
+      const Icon = status.icon;
       return (
-        <div className={cn("lowercase", status.className)}>{status.label}</div>
+        <Badge variant="outline" className={cn("lowercase", status.className)}>
+          <Icon />
+          {status.label}
+        </Badge>
       );
     },
+  },
+  {
+    accessorKey: "mchtCode",
+    header: MERCHANT_COLUMN_MAP.mchtCode,
+    cell: ({ row }) => (
+      <CopyableCell cellText={row.getValue("mchtCode")} showIcon />
+    ),
   },
 ];
