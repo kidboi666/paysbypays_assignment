@@ -4,6 +4,29 @@
 가맹점(Merchant)과 결제(Payment) 데이터를 관리하고 시각화하는 어드민 대시보드입니다.
 **FSD(Feature-Sliced Design)** 아키텍처를 기반으로 설계되었으며, 확장성과 유지보수성을 고려하여 구현되었습니다.
 
+
+## 설치 및 실행 방법
+
+이 프로젝트는 **Node.js v20.11.0** 환경에서 개발되었습니다.
+프로젝트 루트의 `.nvmrc` 파일을 통해 버전을 맞추실 수 있습니다.
+
+```bash
+# 1. Node 버전 설정
+nvm use
+
+# 2. 의존성 설치
+npm install
+
+# 3. 개발 서버 실행
+npm run dev
+```
+
+### 환경 변수 설정
+
+```dotenv
+NEXT_PUBLIC_API_URL=https://recruit.paysbypays.com/api/v1
+```
+
 ## 기술 스택
 - **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
@@ -36,22 +59,6 @@ src/
 ├── widgets/      # 페이지를 구성하는 독립적인 UI 블록 (DataTable, DashboardStats 등)
 ├── entities/     # 비즈니스 도메인 로직 (Merchant, Payment 모델 및 API)
 ├── shared/       # 재사용 가능한 공통 컴포넌트(UI Kit), 유틸리티, 훅
-```
-
-## 설치 및 실행 방법
-
-이 프로젝트는 **Node.js v20.11.0** 환경에서 개발되었습니다.
-프로젝트 루트의 `.nvmrc` 파일을 통해 버전을 맞추실 수 있습니다.
-
-```bash
-# 1. Node 버전 설정
-nvm use
-
-# 2. 의존성 설치
-npm install
-
-# 3. 개발 서버 실행
-npm run dev
 ```
 
 ## 커밋 컨벤션
