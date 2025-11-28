@@ -27,7 +27,7 @@ export function MerchantTableCellViewer({ item }: DataTableCellViewerProps) {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle></DrawerTitle>
+          <DrawerTitle>{item.mchtName}</DrawerTitle>
         </DrawerHeader>
       </DrawerContent>
     </Drawer>
