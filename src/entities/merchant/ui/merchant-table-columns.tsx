@@ -1,4 +1,4 @@
-import { createColumnHelper } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import {
   MERCHANT_BIZ_TYPE_MAP,
   MERCHANT_COLUMN_MAP,
@@ -10,22 +10,23 @@ import { CopyableCell } from "@/shared/components/copyable-cell";
 import { Badge } from "@/shared/components/ui/badge";
 import { cn } from "@/shared/lib/utils";
 
-const columnHelper = createColumnHelper<Merchant>();
-
-export const merchantTableColumn = [
-  columnHelper.accessor("mchtName", {
+export const merchantTableColumn: ColumnDef<Merchant>[] = [
+  {
+    accessorKey: "mchtName",
     header: MERCHANT_COLUMN_MAP.mchtName,
     cell: (info) => <MerchantTableCellViewer item={info.row.original} />,
     enableHiding: false,
-  }),
-  columnHelper.accessor("bizType", {
+  },
+  {
+    accessorKey: "bizType",
     header: MERCHANT_COLUMN_MAP.bizType,
     cell: ({ row }) => {
       const bizType = MERCHANT_BIZ_TYPE_MAP[row.original.bizType];
       return <Badge variant="outline">{bizType.label}</Badge>;
     },
-  }),
-  columnHelper.accessor("status", {
+  },
+  {
+    accessorKey: "status",
     header: MERCHANT_COLUMN_MAP.status,
     cell: ({ row }) => {
       const status = MERCHANT_STATUS_MAP[row.original.status];
@@ -37,9 +38,12 @@ export const merchantTableColumn = [
         </Badge>
       );
     },
-  }),
-  columnHelper.accessor("mchtCode", {
+  },
+  {
+    accessorKey: "mchtCode",
     header: MERCHANT_COLUMN_MAP.mchtCode,
-    cell: (info) => <CopyableCell cellText={info.getValue()} showIcon />,
-  }),
+    cell: ({ row }) => (
+      <CopyableCell cellText={row.getValue("mchtCode")} showIcon />
+    ),
+  },
 ];

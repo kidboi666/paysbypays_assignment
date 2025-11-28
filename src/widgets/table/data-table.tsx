@@ -18,7 +18,7 @@ import { DataTablePagination } from "@/widgets/table/data-table-pagination";
 import { DataTableStatusFilter } from "@/widgets/table/data-table-status-filter";
 import { DataTableViewOptions } from "@/widgets/table/data-table-view-options";
 
-const PAGE_SIZE = 16;
+const DETAIL_PAGE_SIZE = 16;
 
 interface DataTableProps<TData, TValue, TFilter extends string> {
   tableName: string;
@@ -29,6 +29,7 @@ interface DataTableProps<TData, TValue, TFilter extends string> {
     TFilter,
     { label: string; className: string; icon: LucideIcon }
   >;
+  pageSize?: number;
 }
 
 export function DataTable<TData, TValue, TFilter extends string>({
@@ -37,6 +38,7 @@ export function DataTable<TData, TValue, TFilter extends string>({
   data,
   columnLabels,
   filterLabels,
+  pageSize = DETAIL_PAGE_SIZE,
 }: DataTableProps<TData, TValue, TFilter>) {
   const [isMounted, setIsMounted] = React.useState(false);
 
@@ -55,7 +57,7 @@ export function DataTable<TData, TValue, TFilter extends string>({
   );
   const [pagination, setPagination] = React.useState({
     pageIndex: 0,
-    pageSize: PAGE_SIZE,
+    pageSize,
   });
 
   const table = useReactTable({
