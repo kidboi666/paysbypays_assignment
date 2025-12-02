@@ -29,14 +29,6 @@ npm run dev
 NEXT_PUBLIC_API_URL=https://recruit.paysbypays.com/api/v1
 ```
 
-### 환경 변수 설정
-
-**루트에 `.env.local` 파일 생성 후 아래 코드를 입력해주세요.**
-
-```dotenv
-NEXT_PUBLIC_API_URL=https://recruit.paysbypays.com/api/v1
-```
-
 ## 기술 스택
 - **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
